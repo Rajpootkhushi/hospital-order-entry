@@ -14,8 +14,6 @@ import {
   Select,
   MenuItem,
   Grid,
-  Card,
-  CardContent,
   Chip,
   IconButton,
   Tooltip,
@@ -428,4 +426,4 @@ const Appointments = () => {
   );
 };
 
-export default Appointments; 
+export default Appointments;

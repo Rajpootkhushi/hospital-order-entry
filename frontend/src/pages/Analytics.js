@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Typography,
@@ -8,14 +8,7 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
+  InputLabel
 } from '@mui/material';
 import {
   People as PeopleIcon,
@@ -23,8 +16,7 @@ import {
   Schedule as ScheduleIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
-  CheckCircle as CheckCircleIcon,
-  Person as PersonIcon
+  CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
 
 const Analytics = () => {
@@ -32,11 +24,7 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('month');
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [timeRange]);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:5000/api/analytics?timeRange=${timeRange}`);
       const data = await response.json();
@@ -46,7 +34,11 @@ const Analytics = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [timeRange]);
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   const StatCard = ({ title, value, icon, color, trend, trendValue }) => (
     <Card>
@@ -290,4 +282,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics; 
+export default Analytics;
